@@ -20,11 +20,10 @@ public:
 	Data();
 	Data(int n);
 	~Data();
+
 	void PrintAll();
 	int CountItems();
-	Item* InsertItem(char c, int i, std::string s, Date d);
-	std::list<Item*>* InsertSubgroup(char s, int i, std::initializer_list<Item*> items);
-	std::map<int, std::list<Item*>*>* InsertGroup(char c, std::initializer_list<int> subgroups, std::initializer_list<std::initializer_list<Item*>> items);
+
 	std::map<int, std::list<Item*>*>* GetGroup(char c);
 	void PrintGroup(char c);
 	int CountGroupItems(char c);
@@ -33,5 +32,12 @@ public:
 	void PrintSubgroupByNames(char c, int i);
 	void PrintSubgroupByDates(char c, int i);
 	int CountSubgroupItems(char c, int i);
+
+	Item* GetItem(char c, int i, std::string s);
+	void PrintItem(char c, int i, std::string s);
+
+	Item* InsertItem(char c, int i, std::string s, Date d);
+	std::list<Item*>* InsertSubgroup(char s, int i, std::initializer_list<Item*> items);
+	std::map<int, std::list<Item*>*>* InsertGroup(char c, std::initializer_list<int> subgroups, std::initializer_list<std::initializer_list<Item*>> items);
 };
 

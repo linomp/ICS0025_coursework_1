@@ -230,3 +230,10 @@ int Data::CountSubgroupItems(char c, int i) {
 
 	return subgroup->size();
 }
+
+Item* Data::GetItem(char c, int i, std::string s) {
+	return nullptr;
+}
+
+void Data::PrintItem(char c, int i, std::string s) {
+}

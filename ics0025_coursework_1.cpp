@@ -116,6 +116,55 @@ void testCase5() {
 
 }
 
+
+/*
+Apply method PrintItem() for an existing item and for a non-existing item
+*/
+void testCase6() {
+	Data data = Data();
+
+	data.InsertItem('A', 0, "a0", Date(1, 1, 2021)); 
+
+	data.PrintItem('A', 0, "a0");
+
+	try {
+		data.PrintItem('A', 0, "NO NAME");  // non-existing item
+		assert(false); // Force test failure if exception is not thrown
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+	}
+}
+
+
+/*
+Create object containing 30 itemsand apply method PrintAll().
+*/
+void testCase7() { 
+	Data data = Data(30);
+	data.PrintAll();
+}
+
+/*
+Apply methods PrintGroup() and CountGroupItems() for a non-existing group
+*/
+void testCase8() {
+	Data data = Data();
+
+	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b", Date(1, 3, 2021));
+
+	try {
+		data.PrintGroup('Z'); // non-existing group
+		assert(false); // Force test failure if exception is not thrown
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+	}
+
+	assert(data.CountGroupItems('Z') == 0);
+}
+
 int main()
 {
 	//testEmpty();
@@ -123,16 +172,18 @@ int main()
 	//testCase2();
 	//testCase3();
 	//testCase4();
-	testCase5();
-	
-	//testCase7();
+	//testCase5();
+		testCase6();
+	//testCase7(); // create 30?
 	//testCase8();
-	//testCase9();
-	//testCase10();
-	//testCase11();
-
-	//testCase12();
-	//testCase13();
-	//testCase14();
-	//testCase15();
+		
+		//testCase9();
+		//testCase10();
+		//testCase11();
+	
+		//testCase12(); // create 100?
+		
+		//testCase13();
+		//testCase14();
+		//testCase15();
 }
