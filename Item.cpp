@@ -24,7 +24,6 @@ Item::Item(const Item& Original)
 	Name.assign(Original.Name);
 }
 
-// TODO what to destroy?
 Item::~Item()
 {
 	std::cout << "destroying Item \"" << Name << '\"'<<std::endl;

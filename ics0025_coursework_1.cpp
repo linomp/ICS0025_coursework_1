@@ -57,17 +57,21 @@ void testCase3() {
 
 	data.InsertItem('A', 0, "itemA0", d);
 	data.InsertItem('B', 0, "itemB00", d);
-	data.InsertItem('B', 0, "itemB01", d);
-	data.InsertItem('B', 0, "itemB02", d);
+	data.InsertItem('B', 0, "itemB01", Date(1, 3, 2021));
+	data.InsertItem('B', 0, "itemB02", Date(1, 2, 2021));
 	
-	data.PrintAll();
+	//data.PrintAll();
+	data.PrintSubgroupByNames('B', 0);
+	data.PrintSubgroupByDates('B', 0);
+	
+	assert(data.CountSubgroupItems('B', 0) == 3);
 }
 
 int main()
 {
-	testEmpty();
-	testCase1();
-	testCase2();
+	//testEmpty();
+	//testCase1();
+	//testCase2();
 	testCase3();
 	//testCase4();
 	//testCase5();
