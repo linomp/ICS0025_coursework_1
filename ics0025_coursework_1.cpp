@@ -141,6 +141,8 @@ Create object containing 30 itemsand apply method PrintAll().
 */
 void testCase7() { 
 	Data data = Data(30);
+	assert(data.CountItems() == 30);
+
 	data.PrintAll();
 }
 
@@ -221,8 +223,39 @@ void testCase10() {
 	data.PrintAll();
 }
 
+
+/*
+* Apply method InsertGroup() if:
+*/
+void testCase11() {
+	Data data = Data();
+
+	// a.The group is new.
+	auto newGroup1 = data.InsertGroup('A', {  }, { {  } });
+	assert(newGroup1); // should not be nullptr
+
+	// b.The group exists.
+	auto newGroup2 = data.InsertGroup('A', {  }, { {  } });
+	assert(!newGroup2); // should be nullptr
+	
+	// c.Apply method PrintAll() to check the results.
+	data.PrintAll();
+}
+
+
+/*
+Create object containing 100 items and apply method PrintAll().
+*/
+void testCase12() {
+	Data data = Data(100);
+	assert(data.CountItems() == 100);
+
+	data.PrintAll();
+}
+
 int main()
-{/*
+{
+	
 	testEmpty();
 	testCase1();
 	testCase2();
@@ -234,13 +267,13 @@ int main()
 	testCase8();
 	testCase9();
 	testCase10();
-	*/
-
-		//testCase11();
+	testCase11();
+	testCase12();
 	
-		//testCase12(); // create 100?
+	
+	// create 100?
 		
-		//testCase13();
-		//testCase14();
-		//testCase15();
+	//testCase13();
+	//testCase14();
+	//testCase15();
 }

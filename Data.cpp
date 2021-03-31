@@ -86,45 +86,62 @@ Item* Data::InsertItem(char c, int i, std::string s, Date d)
 
 std::list<Item*>* Data::InsertSubgroup(char s, int i, std::initializer_list<Item*> items)
 {
-	auto existingSubgroup = GetSubgroup(s, i);
-	if (existingSubgroup) {
+	try {
+		auto existingSubgroup = GetSubgroup(s, i);
+		if (existingSubgroup) {
+			return nullptr;
+		}
+
+		auto groupIt = DataStructure.find(s);
+
+		if (groupIt != DataStructure.end()) { // group exists
+			groupIt->second->emplace(i, new std::list<Item*>(items));
+			return groupIt->second->find(i)->second;
+		}
+		else {
+			InsertGroup(s, { i }, { items });
+			groupIt = DataStructure.find(s); // update to existing group
+			return groupIt->second->find(i)->second;
+		}
+
 		return nullptr;
 	}
-
-	auto groupIt = DataStructure.find(s);
-
-	if (groupIt != DataStructure.end()) { // group exists
-		groupIt->second->emplace(i, new std::list<Item*>(items));
-		return groupIt->second->find(i)->second;
-	}
-	else {
-		InsertGroup(s, { i }, { items }); // insert empty subgroup
-		groupIt = DataStructure.find(s); // find group
-		//groupIt->second->emplace(i, new std::list<Item*>(items)); // populate
-		//auto tst = groupIt->second;
-		return groupIt->second->find(i)->second;
+	catch (const std::exception& e) {
+		std::cout << e.what();
+		return nullptr;
 	}
 	
-	return nullptr;
 }
 
 std::map<int, std::list<Item*>*>* Data::InsertGroup(char c, std::initializer_list<int> subgroupKeys, std::initializer_list<std::initializer_list<Item*>> items)
 {
-	std::map<int, std::list<Item*>*>* group = new std::map<int, std::list<Item*>*>();
+	try {
+		auto existingGroup = GetGroup(c);
+		if (existingGroup) {
+			return nullptr;
+		}
 
-	for (int sg : subgroupKeys) {
-		std::list<Item*>* newSubgroup = new std::list<Item*>(); // empty subgroup
-		for (auto itemList : items) {
-			for (Item* item : itemList) {
-				if (item->getSubgroup() == sg) {
-					newSubgroup->push_back(item); // fill with corresponding items
+		std::map<int, std::list<Item*>*>* group = new std::map<int, std::list<Item*>*>();
+
+		for (int sg : subgroupKeys) {
+			std::list<Item*>* newSubgroup = new std::list<Item*>(); // empty subgroup
+			for (auto itemList : items) {
+				for (Item* item : itemList) {
+					if (item->getSubgroup() == sg) {
+						newSubgroup->push_back(item); // fill with corresponding items
+					}
 				}
 			}
+			group->emplace(sg, newSubgroup);  // insert subgroup
 		}
-		group->emplace(sg, newSubgroup);  // insert subgroup
+		DataStructure.emplace(c, group);  // insert group
+		return group;
 	}
-	DataStructure.emplace(c, group);  // insert group
-	return group;
+	catch (const std::exception& e) {
+		std::cout << e.what();
+		return nullptr;
+	}
+
 }
 
 void Data::PrintAll()
