@@ -136,7 +136,6 @@ void testCase6() {
 	}
 }
 
-
 /*
 Create object containing 30 itemsand apply method PrintAll().
 */
@@ -165,6 +164,13 @@ void testCase8() {
 	assert(data.CountGroupItems('Z') == 0);
 }
 
+/*
+*/
+void testCase9() {
+	//Data data = Data(30);
+	//data.PrintAll();
+}
+
 int main()
 {
 	//testEmpty();
@@ -173,11 +179,11 @@ int main()
 	//testCase3();
 	//testCase4();
 	//testCase5();
-		testCase6();
+	//testCase6();
 	//testCase7(); // create 30?
 	//testCase8();
 		
-		//testCase9();
+		testCase9();
 		//testCase10();
 		//testCase11();
 	

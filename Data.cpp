@@ -232,8 +232,28 @@ int Data::CountSubgroupItems(char c, int i) {
 }
 
 Item* Data::GetItem(char c, int i, std::string s) {
+	auto subgroup = GetSubgroup(c, i);
+	if (!subgroup) {
+		throw std::invalid_argument("Subgroup not found!\n");
+	} 
+
+	Item testItem = Item(c, i, s, Date());
+	auto itemIter = std::find_if(subgroup->begin(), subgroup->end(), 
+		[&testItem](const Item* x) { return x->getName() == testItem.getName(); });
+
+	if (itemIter != subgroup->end()) { // item exists
+		return *itemIter;
+	}
+
 	return nullptr;
 }
 
 void Data::PrintItem(char c, int i, std::string s) {
+	Item* item = GetItem(c, i, s);
+
+	if (!item) {
+		throw std::invalid_argument("Item not found!\n");
+	}
+
+	std::cout << item->ToString() << std::endl;
 }
