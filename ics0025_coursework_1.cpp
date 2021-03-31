@@ -64,14 +64,66 @@ void testCase3() {
 	assert(data.CountSubgroupItems('B', 0) == 3);
 }
 
+/*
+From the selected group select a subgroup containing only one item. 
+Apply methods PrintSubgroupByNames(), PrintSubgroupByDates() and CountSubgroupItems()
+for the selected subgroup.
+*/
+void testCase4() {
+	Data data = Data();
+
+	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b", Date(1, 3, 2021));
+	data.InsertItem('B', 0, "c", Date(1, 2, 2021));
+	data.InsertItem('B', 1, "d", Date(1, 2, 2021));
+
+	data.PrintSubgroupByNames('B', 1);
+	data.PrintSubgroupByDates('B', 1);
+
+	assert(data.CountGroupItems('B') == 4);
+	assert(data.CountSubgroupItems('B', 1) == 1);
+}
+
+/*
+Apply methods PrintSubgroupByNames(), PrintSubgroupByDates() and CountSubgroupItems()
+for a non-existing subgroup.
+*/
+void testCase5() {
+	Data data = Data();
+
+	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b", Date(1, 3, 2021));
+	data.InsertItem('B', 0, "c", Date(1, 2, 2021));
+	data.InsertItem('B', 1, "d", Date(1, 2, 2021));
+
+	try {
+		data.PrintSubgroupByNames('B', 5); // non-existing subgroup
+		assert(false); // Force test failure if exception is not thrown
+	}
+	catch (const std::exception& e) { 
+		std::cout << e.what(); 
+	}
+
+	try {
+		data.PrintSubgroupByDates('B', 5);  // non-existing subgroup
+		assert(false); // Force test failure if exception is not thrown
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+	}
+
+	assert(data.CountSubgroupItems('B', 5) == 0);
+
+}
+
 int main()
 {
 	//testEmpty();
 	//testCase1();
 	//testCase2();
-	testCase3();
+	//testCase3();
 	//testCase4();
-	//testCase5();
+	testCase5();
 	
 	//testCase7();
 	//testCase8();

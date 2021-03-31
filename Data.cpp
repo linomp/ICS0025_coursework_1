@@ -146,7 +146,7 @@ void Data::PrintGroup(char c)
 {
 	auto group = GetGroup(c);
 	if (!group) {
-		throw std::invalid_argument("Group not found!");
+		throw std::invalid_argument("Group not found!\n");
 	}
 
 	auto print = [](const Item* item) { std::cout << "  - " << item->ToString() << std::endl; };
@@ -167,7 +167,7 @@ int Data::CountGroupItems(char c)
 {
 	auto group = GetGroup(c);
 	if (!group) {
-		throw std::invalid_argument("Group not found!");
+		return 0;
 	}
 
 	int totalSize = 0; 
@@ -183,7 +183,7 @@ std::list<Item*>* Data::GetSubgroup(char c, int i) {
 
 	auto group = GetGroup(c);
 	if (!group) {
-		throw std::invalid_argument("Group not found!");
+		throw std::invalid_argument("Group not found!\n");
 	}
 
 	auto subgroupIt = group->find(i);
@@ -197,7 +197,7 @@ std::list<Item*>* Data::GetSubgroup(char c, int i) {
 void Data::PrintSubgroupByNames(char c, int i) {
 	auto subgroup = GetSubgroup(c, i);
 	if (!subgroup) {
-		throw std::invalid_argument("Group not found!");
+		throw std::invalid_argument("Subgroup not found!\n");
 	}
 
 	subgroup->sort([](Item* lhs, Item* rhs) {return lhs->getName() < rhs->getName(); });
@@ -211,7 +211,7 @@ void Data::PrintSubgroupByNames(char c, int i) {
 void Data::PrintSubgroupByDates(char c, int i) {
 	auto subgroup = GetSubgroup(c, i);
 	if (!subgroup) {
-		throw std::invalid_argument("Group not found!");
+		throw std::invalid_argument("Subgroup not found!\n");
 	}
 
 	subgroup->sort([](Item* lhs, Item* rhs) {return lhs->getTimestamp() < rhs->getTimestamp(); });
@@ -225,7 +225,7 @@ void Data::PrintSubgroupByDates(char c, int i) {
 int Data::CountSubgroupItems(char c, int i) {
 	auto subgroup = GetSubgroup(c, i);
 	if (!subgroup) {
-		throw std::invalid_argument("Group not found!");
+		return 0;
 	}
 
 	return subgroup->size();
