@@ -47,6 +47,11 @@ int Item::getSubgroup() const
 	return Subgroup;
 }
 
+char Item::getGroup() const
+{
+	return Group;
+}
+
 std::string Item::getName() const
 {
 	return Name;

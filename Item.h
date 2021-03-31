@@ -18,6 +18,7 @@ public:
 	~Item();
 	std::string ToString() const;
 	int getSubgroup() const;
+	char getGroup() const;
 	std::string getName() const;
 	Date getTimestamp() const;
 };

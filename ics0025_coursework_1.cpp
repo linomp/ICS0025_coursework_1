@@ -6,10 +6,14 @@
 
 // Test empty container creation
 void testEmpty() {
+	std::cout << std::endl << "** Test Empty Container **" << std::endl;
+
 	Data data = Data();
 	data.PrintAll();
 
 	assert(data.CountItems() == 0);
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
@@ -17,11 +21,15 @@ Create object containing 300 items.
 Use methods PrintAll() and CountItems() to check the created object.
 */
 void testCase1() {
+	std::cout << std::endl << "** Test Case 1 **" << std::endl;
+
 	int n = 300;
 	Data data = Data(n);
 	data.PrintAll();
 
 	assert(data.CountItems() == n);
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
@@ -30,6 +38,8 @@ Condition: there must be at least one subgroup containing at least two items.
 Apply methods PrintGroup() and CountGroupItems() for the selected group
 */
 void testCase2() {
+	std::cout << std::endl << "** Test Case 2 **" << std::endl;
+
 	Data data = Data();
 
 	Date d = Date(1, 1, 2021);
@@ -44,6 +54,8 @@ void testCase2() {
 	assert(data.CountItems() == 3);
 	assert(data.CountGroupItems('A') == 1);
 	assert(data.CountGroupItems('B') == 2);
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
@@ -52,6 +64,8 @@ Apply methods PrintSubgroupByNames(), PrintSubgroupByDates() and CountSubgroupIt
 for the selected subgroup
 */
 void testCase3() {
+	std::cout << std::endl << "** Test Case 3 **" << std::endl;
+
 	Data data = Data();
 
 	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
@@ -62,6 +76,8 @@ void testCase3() {
 	data.PrintSubgroupByDates('B', 0);
 	
 	assert(data.CountSubgroupItems('B', 0) == 3);
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
@@ -70,6 +86,8 @@ Apply methods PrintSubgroupByNames(), PrintSubgroupByDates() and CountSubgroupIt
 for the selected subgroup.
 */
 void testCase4() {
+	std::cout << std::endl << "** Test Case 4 **" << std::endl;
+
 	Data data = Data();
 
 	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
@@ -82,6 +100,8 @@ void testCase4() {
 
 	assert(data.CountGroupItems('B') == 4);
 	assert(data.CountSubgroupItems('B', 1) == 1);
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
@@ -89,6 +109,8 @@ Apply methods PrintSubgroupByNames(), PrintSubgroupByDates() and CountSubgroupIt
 for a non-existing subgroup.
 */
 void testCase5() {
+	std::cout << std::endl << "** Test Case 5 **" << std::endl;
+
 	Data data = Data();
 
 	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
@@ -110,10 +132,11 @@ void testCase5() {
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what();
+
+		assert(data.CountSubgroupItems('B', 5) == 0);
+
+		std::cout << "** PASS **" << std::endl << std::endl;
 	}
-
-	assert(data.CountSubgroupItems('B', 5) == 0);
-
 }
 
 
@@ -121,6 +144,8 @@ void testCase5() {
 Apply method PrintItem() for an existing item and for a non-existing item
 */
 void testCase6() {
+	std::cout << std::endl << "** Test Case 6 **" << std::endl;
+
 	Data data = Data();
 
 	data.InsertItem('A', 0, "a0", Date(1, 1, 2021)); 
@@ -133,6 +158,7 @@ void testCase6() {
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what();
+		std::cout << "** PASS **" << std::endl << std::endl;
 	}
 }
 
@@ -140,16 +166,22 @@ void testCase6() {
 Create object containing 30 itemsand apply method PrintAll().
 */
 void testCase7() { 
+	std::cout << std::endl << "** Test Case 7 **" << std::endl;
+
 	Data data = Data(30);
 	assert(data.CountItems() == 30);
 
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
 Apply methods PrintGroup() and CountGroupItems() for a non-existing group
 */
 void testCase8() {
+	std::cout << std::endl << "** Test Case 8 **" << std::endl;
+
 	Data data = Data();
 
 	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
@@ -161,15 +193,19 @@ void testCase8() {
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what();
-	}
 
-	assert(data.CountGroupItems('Z') == 0);
+		assert(data.CountGroupItems('Z') == 0);
+
+		std::cout << "** PASS **" << std::endl << std::endl;
+	}
 }
 
 /*
 * Apply method InsertItem() if:
 */ 
 void testCase9() {
+	std::cout << std::endl << "** Test Case 9 **" << std::endl;
+
 	Data data = Data();
 
 	// a.The new item will be a member of an existing group and an existing subgroup.
@@ -194,12 +230,16 @@ void testCase9() {
 
 	// e.Apply method PrintAll() to check the results.
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
 * Apply method InsertSubgroup() if:
 */
 void testCase10() {
+	std::cout << std::endl << "** Test Case 10 **" << std::endl;
+
 	Data data = Data();
 
 	// a.The new subgroup will be a member of an existing group.
@@ -221,6 +261,8 @@ void testCase10() {
 
 	// d.Apply method PrintAll() to check the results.
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 
@@ -228,6 +270,8 @@ void testCase10() {
 * Apply method InsertGroup() if:
 */
 void testCase11() {
+	std::cout << std::endl << "** Test Case 11 **" << std::endl;
+
 	Data data = Data();
 
 	// a.The group is new.
@@ -240,6 +284,8 @@ void testCase11() {
 	
 	// c.Apply method PrintAll() to check the results.
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 
@@ -247,34 +293,62 @@ void testCase11() {
 Create object containing 100 items and apply method PrintAll().
 */
 void testCase12() {
+	std::cout << std::endl << "** Test Case 12 **" << std::endl;
+
 	Data data = Data(100);
 	assert(data.CountItems() == 100);
 
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
 Apply method RemoveItem() so that:
 */
 void testCase13() {
+	std::cout << std::endl << "** Test Case 13 **" << std::endl;
+
 	Data data = Data();
+	data.InsertItem('A', 0, "a00", Date(1, 1, 2021));
+	data.InsertItem('A', 0, "a01", Date(1, 1, 2021));
+	data.InsertItem('A', 1, "a10", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b00", Date(1, 1, 2021));
 
 	// a.After removing the subgroup does not disappear.
+	bool result = data.RemoveItem('A', 0, "a00");
+	assert(result); // should succeed
+	assert(data.GetSubgroup('A', 0)); // should still exist
+	assert(data.GetGroup('A')); // should still exist
+	assert(data.CountSubgroupItems('A', 0) == 1); // subgroup count should decrease
+	assert(data.CountGroupItems('A') == 2); // group count should decrease
 	
 	// b.After removing the subgroup disappears but the group is kept.
-	
+	result = data.RemoveItem('A', 0, "a01");
+	assert(!data.GetSubgroup('A', 0)); // should not exist anymore
+	assert(data.GetGroup('A')); // should still exist
+	assert(data.CountGroupItems('A') == 1); // group count should decrease
+
 	// c.After removing the group disappears.
-	
+	result = data.RemoveItem('A', 1, "a10");
+	assert(!data.GetGroup('A')); // should not exist anymore
+
 	// d.The item to remove does not exist.
+	result = data.RemoveItem('B', 0, "NO NAME");
+	assert(!result); // should not succeed
 	
 	// e.Apply method PrintAll() to check the results
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
 Apply method RemoveSubgroup() so that:
 */
 void testCase14() {
+	std::cout << std::endl << "** Test Case 14 **" << std::endl;
+
 	Data data = Data();
 	data.InsertItem('A', 0, "a0", Date(1, 1, 2021));
 	data.InsertItem('A', 1, "a1", Date(1, 1, 2021));
@@ -297,12 +371,16 @@ void testCase14() {
 	
 	// d.Apply method PrintAll() to check the results
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 /*
 ApplyMethod RemoveGroup() so that:
 */
 void testCase15() {
+	std::cout << std::endl << "** Test Case 15 **" << std::endl;
+
 	Data data = Data();
 	data.InsertItem('A', 0, "a0", Date(1, 1, 2021));
 	data.InsertItem('A', 0, "a1", Date(1, 1, 2021));
@@ -320,11 +398,12 @@ void testCase15() {
 
 	// e.Apply method PrintAll() to check the results
 	data.PrintAll();
+
+	std::cout << "** PASS **" << std::endl << std::endl;
 }
 
 int main()
 {
-	/*
 	testEmpty();
 	testCase1();
 	testCase2();
@@ -338,8 +417,7 @@ int main()
 	testCase10();
 	testCase11();
 	testCase12();
-	*/
 	testCase13();
-	//testCase14();
-	//testCase15();
+	testCase14();
+	testCase15();
 }

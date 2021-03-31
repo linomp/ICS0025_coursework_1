@@ -283,7 +283,7 @@ Item* Data::GetItem(char c, int i, std::string s) {
 
 	Item testItem = Item(c, i, s, Date());
 	auto itemIter = std::find_if(subgroup->begin(), subgroup->end(),
-		[&testItem](const Item* x) { return x->getName() == testItem.getName(); });
+		[&testItem](const Item* x) { return (x->getName() == testItem.getName() && x->getSubgroup() == testItem.getSubgroup() && x->getGroup() && testItem.getGroup()); });
 
 	if (itemIter != subgroup->end()) { // item exists
 		return *itemIter;
@@ -305,6 +305,28 @@ void Data::PrintItem(char c, int i, std::string s) {
 
 bool Data::RemoveItem(char c, int i, std::string s)
 {
+	auto group = GetGroup(c);
+	auto subgroup = GetSubgroup(c, i);
+	auto item = GetItem(c, i, s);
+
+	if (group && subgroup && item) {
+
+		Item testItem = Item(c, i, s, Date());
+		auto iterator = std::remove_if(subgroup->begin(), subgroup->end(),
+			[&testItem](const Item* x) { return (x->getName() == testItem.getName() && x->getSubgroup()==testItem.getSubgroup() && x->getGroup() && testItem.getGroup()); }
+		);
+
+		subgroup->erase(iterator, subgroup->end());
+
+		// if after removing item subgroup is empty,
+		// remove subgroup too
+		if (subgroup->size() == 0) {
+			return RemoveSubgroup(c, i);
+		}
+
+		return true;
+	}
+
 	return false;
 }
 
