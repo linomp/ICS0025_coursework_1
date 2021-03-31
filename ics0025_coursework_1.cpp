@@ -3,6 +3,7 @@
 #include <assert.h>
 #include "Data.h"
 
+
 // Test empty container creation
 void testEmpty() {
 	Data data = Data();
@@ -53,12 +54,9 @@ for the selected subgroup
 void testCase3() {
 	Data data = Data();
 
-	Date d = Date(1, 1, 2021);
-
-	data.InsertItem('A', 0, "itemA0", d);
-	data.InsertItem('B', 0, "itemB00", d);
-	data.InsertItem('B', 0, "itemB01", Date(1, 3, 2021));
-	data.InsertItem('B', 0, "itemB02", Date(1, 2, 2021));
+	data.InsertItem('B', 0, "a", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b", Date(1, 3, 2021));
+	data.InsertItem('B', 0, "c", Date(1, 2, 2021));
 	
 	//data.PrintAll();
 	data.PrintSubgroupByNames('B', 0);

@@ -44,8 +44,8 @@ Data::~Data()
 		delete outerMapIt.second;
 	}
 	
-	// map itself is in stack
-	DataStructure.clear(); // TODO neccesary?
+	// TODO map itself is in stack, is this necessary?  
+	DataStructure.clear();
 }
 
 Item* Data::InsertItem(char c, int i, std::string s, Date d) 
