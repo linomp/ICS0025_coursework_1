@@ -31,7 +31,7 @@ Apply methods PrintGroup() and CountGroupItems() for the selected group
 void testCase2() {
 	Data data = Data();
 
-	Date d = Date::CreateRandomDate(Date(1, 1, 2000), Date(1, 1, 2020));
+	Date d = Date(1, 1, 2021);
 	
 	data.InsertItem('A', 0, "itemA0", d);
 	data.InsertItem('B', 0, "itemB0", d);
@@ -53,20 +53,21 @@ for the selected subgroup
 void testCase3() {
 	Data data = Data();
 
-	Date d = Date::CreateRandomDate(Date(1, 1, 2000), Date(1, 1, 2020));
+	Date d = Date(1, 1, 2021);
 
 	data.InsertItem('A', 0, "itemA0", d);
 	data.InsertItem('B', 0, "itemB00", d);
 	data.InsertItem('B', 0, "itemB01", d);
 	data.InsertItem('B', 0, "itemB02", d);
-	 
+	
+	data.PrintAll();
 }
 
 int main()
 {
-	//testEmpty();
-	//testCase1();
-	//testCase2();
+	testEmpty();
+	testCase1();
+	testCase2();
 	testCase3();
 	//testCase4();
 	//testCase5();

@@ -25,26 +25,27 @@ Data::Data(int n)
 	}
 }
 
-// TODO - check logic, iterator types??
 Data::~Data()
 {
-	/*
+	
 	for (auto& outerMapIt : DataStructure) {
 
 		for (auto& innerMapIt : *outerMapIt.second) {
 			for (auto& it3 : *innerMapIt.second) {
 				// deallocate every element of the list
-				delete it3
+				delete it3;
 			}
 			// deallocate the list
+			std::cout << "destroying Subgroup \"" << innerMapIt.first << '\"' << std::endl;
 			delete innerMapIt.second;
 		}
 		// deallocate the inner map
+		std::cout << "destroying Group \"" << outerMapIt.first << '\"' << std::endl;
 		delete outerMapIt.second;
 	}
-	*/
+	
 	// map itself is in stack
-	//DataStructure.clear(); // TODO neccesary?
+	DataStructure.clear(); // TODO neccesary?
 }
 
 Item* Data::InsertItem(char c, int i, std::string s, Date d) 
@@ -177,3 +178,17 @@ int Data::CountGroupItems(char c)
 	return totalSize;
 }
 
+
+std::list<Item*>* Data::GetSubgroup(char c, int i) {
+	return nullptr;
+}
+
+void Data::PrintSubgroupByNames(char c, int i) {
+}
+
+void Data::PrintSubgroupByDates(char c, int i) {
+}
+
+int Data::CountSubgroupItems(char c, int i) {
+	return 0;
+}

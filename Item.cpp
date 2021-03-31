@@ -3,6 +3,7 @@
 
 #include <random>
 #include <string.h>
+#include <iostream>
 
 Item::Item() 
 {
@@ -16,7 +17,7 @@ Item::Item()
 }
 
 Item::Item(const Item& Original)
-{ // copy constructor
+{ 
 	Group = Original.Group;
 	Subgroup = Original.Subgroup;
 	Timestamp = Original.Timestamp;
@@ -26,7 +27,7 @@ Item::Item(const Item& Original)
 // TODO what to destroy?
 Item::~Item()
 {
-	
+	std::cout << "destroying Item \"" << Name << '\"'<<std::endl;
 }
 
 Item::Item(char group, int subgroup, std::string name, Date date) 
