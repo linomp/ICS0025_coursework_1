@@ -272,20 +272,30 @@ void testCase13() {
 }
 
 /*
-Apply method RemoveItem() so that:
+Apply method RemoveSubgroup() so that:
 */
 void testCase14() {
 	Data data = Data();
+	data.InsertItem('A', 0, "a0", Date(1, 1, 2021));
+	data.InsertItem('A', 1, "a1", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b0", Date(1, 1, 2021));
 
-	// a.After removing the subgroup does not disappear.
-
-	// b.After removing the subgroup disappears but the group is kept.
-
-	// c.After removing the group disappears.
-
-	// d.The item to remove does not exist.
-
-	// e.Apply method PrintAll() to check the results
+	// a.After removing the group is kept.
+	bool result = data.RemoveSubgroup('A', 0);
+	assert(result); // should succeed
+	assert(data.CountGroupItems('A') == 1); // group count should decrease
+	assert(data.GetGroup('A')); // should still exist
+	 
+	// b.After removing the group disappears.
+	result = data.RemoveSubgroup('A', 1);
+	assert(result); // should succeed
+	assert(!data.GetGroup('A')); // should not exist anymore
+	 
+	// c.This subgroup does not exist.
+	result = data.RemoveSubgroup('B', 10);
+	assert(!result); // should not succeed
+	
+	// d.Apply method PrintAll() to check the results
 	data.PrintAll();
 }
 
@@ -294,22 +304,19 @@ ApplyMethod RemoveGroup() so that:
 */
 void testCase15() {
 	Data data = Data();
-
-	// a.The group was an existing one.
 	data.InsertItem('A', 0, "a0", Date(1, 1, 2021));
 	data.InsertItem('A', 0, "a1", Date(1, 1, 2021));
 	data.InsertItem('A', 2, "a2", Date(1, 1, 2021));
 
+	// a.The group was an existing one.
 	bool result = data.RemoveGroup('A');
 	assert(result); // should succeed
 	assert(!data.GetGroup('A')); // should not exist anymore
-	data.PrintAll();
 
 	// b.The group does not exist.
 	assert(!data.GetGroup('B')); // should not exist
 	result = data.RemoveGroup('B');
 	assert(!result); // should not succeed
-
 
 	// e.Apply method PrintAll() to check the results
 	data.PrintAll();
@@ -332,8 +339,7 @@ int main()
 	testCase11();
 	testCase12();
 	*/
-		
-	//testCase13();
+	testCase13();
 	//testCase14();
-	testCase15();
+	//testCase15();
 }

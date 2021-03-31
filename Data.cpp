@@ -310,6 +310,26 @@ bool Data::RemoveItem(char c, int i, std::string s)
 
 bool Data::RemoveSubgroup(char c, int i)
 {
+	auto group = GetGroup(c);
+	auto subgroup = GetSubgroup(c, i);
+
+	if (group && subgroup) {
+		for (auto& item : *subgroup) {
+			delete item;
+		}
+		delete subgroup;
+
+		group->erase(i);
+
+		// if after removing subgroup, group is empty,
+		// remove group too
+		if (group->size() == 0) {
+			return RemoveGroup(c);
+		}
+
+		return true;
+	}
+
 	return false;
 }
 
