@@ -143,12 +143,14 @@
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="ics0025_coursework_1.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="RandomUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RandomUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ics0025_coursework_1.rc" />
