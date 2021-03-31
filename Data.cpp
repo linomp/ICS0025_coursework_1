@@ -86,10 +86,26 @@ Item* Data::InsertItem(char c, int i, std::string s, Date d)
 
 std::list<Item*>* Data::InsertSubgroup(char s, int i, std::initializer_list<Item*> items)
 {
-	auto groupIt = DataStructure.find(s);
-	groupIt->second->emplace(i, new std::list<Item*>(items));
+	auto existingSubgroup = GetSubgroup(s, i);
+	if (existingSubgroup) {
+		return nullptr;
+	}
 
-	return groupIt->second->find(i)->second;
+	auto groupIt = DataStructure.find(s);
+
+	if (groupIt != DataStructure.end()) { // group exists
+		groupIt->second->emplace(i, new std::list<Item*>(items));
+		return groupIt->second->find(i)->second;
+	}
+	else {
+		InsertGroup(s, { i }, { items }); // insert empty subgroup
+		groupIt = DataStructure.find(s); // find group
+		//groupIt->second->emplace(i, new std::list<Item*>(items)); // populate
+		//auto tst = groupIt->second;
+		return groupIt->second->find(i)->second;
+	}
+	
+	return nullptr;
 }
 
 std::map<int, std::list<Item*>*>* Data::InsertGroup(char c, std::initializer_list<int> subgroupKeys, std::initializer_list<std::initializer_list<Item*>> items)

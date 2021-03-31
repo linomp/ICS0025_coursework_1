@@ -169,7 +169,6 @@ void testCase8() {
 */ 
 void testCase9() {
 	Data data = Data();
-	data.PrintAll();
 
 	// a.The new item will be a member of an existing group and an existing subgroup.
 	data.InsertItem('B', 0, "b0", Date(1, 1, 2021));
@@ -195,9 +194,36 @@ void testCase9() {
 	data.PrintAll();
 }
 
+/*
+* Apply method InsertSubgroup() if:
+*/
+void testCase10() {
+	Data data = Data();
+
+	// a.The new subgroup will be a member of an existing group.
+	data.InsertItem('A', 0, "a0", Date(1, 1, 2021));
+	auto newSubgroup1 = data.InsertSubgroup('A', 2, {});
+	assert(newSubgroup1); // should not be nullptr
+
+	// b.The new subgroup will be a member of a non - existing group.
+	Item* newItem = new Item('B', 0, "b0", Date(1, 1, 2021));
+	Item* newItem2 = new Item('B', 0, "b1", Date(1, 1, 2021));
+	auto newSubgroup2 = data.InsertSubgroup('B', 0, { newItem, newItem2 });
+	assert(newSubgroup2); // should not be nullptr
+	assert(data.CountSubgroupItems('B', 0) == 2);
+
+	// c.The subgroup already exists.
+	auto newSubgroup3 = data.InsertSubgroup('B', 0, { });
+	assert(!newSubgroup3); // should be nullptr
+	assert(data.CountSubgroupItems('B', 0) == 2); // existing should not be changed
+
+	// d.Apply method PrintAll() to check the results.
+	data.PrintAll();
+}
+
 int main()
-{
-	/*testEmpty();
+{/*
+	testEmpty();
 	testCase1();
 	testCase2();
 	testCase3();
@@ -207,9 +233,9 @@ int main()
 	testCase7();
 	testCase8();
 	testCase9();
+	testCase10();
 	*/
 
-		//testCase10();
 		//testCase11();
 	
 		//testCase12(); // create 100?
