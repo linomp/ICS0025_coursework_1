@@ -301,3 +301,32 @@ void Data::PrintItem(char c, int i, std::string s) {
 
 	std::cout << item->ToString() << std::endl;
 }
+
+
+bool Data::RemoveItem(char c, int i, std::string s)
+{
+	return false;
+}
+
+bool Data::RemoveSubgroup(char c, int i)
+{
+	return false;
+}
+
+bool Data::RemoveGroup(char c)
+{
+	auto group = GetGroup(c);
+	if (group) {
+		for (auto innerMapIt = group->cbegin(); innerMapIt != group->cend(); ++innerMapIt) {
+			auto list = innerMapIt->second;
+			for (auto& item : *list) {
+				delete item;
+			}
+			delete list;
+		}
+
+		delete group;
+	}
+	
+	return DataStructure.erase(c);
+}

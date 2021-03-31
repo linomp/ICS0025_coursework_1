@@ -253,9 +253,71 @@ void testCase12() {
 	data.PrintAll();
 }
 
+/*
+Apply method RemoveItem() so that:
+*/
+void testCase13() {
+	Data data = Data();
+
+	// a.After removing the subgroup does not disappear.
+	
+	// b.After removing the subgroup disappears but the group is kept.
+	
+	// c.After removing the group disappears.
+	
+	// d.The item to remove does not exist.
+	
+	// e.Apply method PrintAll() to check the results
+	data.PrintAll();
+}
+
+/*
+Apply method RemoveItem() so that:
+*/
+void testCase14() {
+	Data data = Data();
+
+	// a.After removing the subgroup does not disappear.
+
+	// b.After removing the subgroup disappears but the group is kept.
+
+	// c.After removing the group disappears.
+
+	// d.The item to remove does not exist.
+
+	// e.Apply method PrintAll() to check the results
+	data.PrintAll();
+}
+
+/*
+ApplyMethod RemoveGroup() so that:
+*/
+void testCase15() {
+	Data data = Data();
+
+	// a.The group was an existing one.
+	data.InsertItem('A', 0, "a0", Date(1, 1, 2021));
+	data.InsertItem('A', 0, "a1", Date(1, 1, 2021));
+	data.InsertItem('A', 2, "a2", Date(1, 1, 2021));
+
+	bool result = data.RemoveGroup('A');
+	assert(result); // should succeed
+	assert(!data.GetGroup('A')); // should not exist anymore
+	data.PrintAll();
+
+	// b.The group does not exist.
+	assert(!data.GetGroup('B')); // should not exist
+	result = data.RemoveGroup('B');
+	assert(!result); // should not succeed
+
+
+	// e.Apply method PrintAll() to check the results
+	data.PrintAll();
+}
+
 int main()
 {
-	
+	/*
 	testEmpty();
 	testCase1();
 	testCase2();
@@ -269,11 +331,9 @@ int main()
 	testCase10();
 	testCase11();
 	testCase12();
-	
-	
-	// create 100?
+	*/
 		
 	//testCase13();
 	//testCase14();
-	//testCase15();
+	testCase15();
 }
