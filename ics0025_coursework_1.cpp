@@ -54,11 +54,10 @@ for the selected subgroup
 void testCase3() {
 	Data data = Data();
 
-	data.InsertItem('B', 0, "a", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "z", Date(1, 1, 2021));
 	data.InsertItem('B', 0, "b", Date(1, 3, 2021));
 	data.InsertItem('B', 0, "c", Date(1, 2, 2021));
 	
-	//data.PrintAll();
 	data.PrintSubgroupByNames('B', 0);
 	data.PrintSubgroupByDates('B', 0);
 	

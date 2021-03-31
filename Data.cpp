@@ -180,15 +180,53 @@ int Data::CountGroupItems(char c)
 
 
 std::list<Item*>* Data::GetSubgroup(char c, int i) {
+
+	auto group = GetGroup(c);
+	if (!group) {
+		throw std::invalid_argument("Group not found!");
+	}
+
+	auto subgroupIt = group->find(i);
+	if (subgroupIt != group->end()) { // subgroup exists
+		return subgroupIt->second;
+	}
+
 	return nullptr;
 }
 
 void Data::PrintSubgroupByNames(char c, int i) {
+	auto subgroup = GetSubgroup(c, i);
+	if (!subgroup) {
+		throw std::invalid_argument("Group not found!");
+	}
+
+	subgroup->sort([](Item* lhs, Item* rhs) {return lhs->getName() < rhs->getName(); });
+	
+	std::cout << std::endl <<"** Subgroup sorted by names **" << std::endl << c << ':' << std::endl << " " << i << ":"<< std::endl; // print group
+
+	auto print = [](const Item* item) { std::cout << "  - " << item->ToString() << std::endl; };
+	std::for_each(subgroup->cbegin(), subgroup->cend(), print);
 }
 
 void Data::PrintSubgroupByDates(char c, int i) {
+	auto subgroup = GetSubgroup(c, i);
+	if (!subgroup) {
+		throw std::invalid_argument("Group not found!");
+	}
+
+	subgroup->sort([](Item* lhs, Item* rhs) {return lhs->getTimestamp() < rhs->getTimestamp(); });
+
+	std::cout << std::endl  << "** Subgroup sorted by dates **" << std::endl << c << ':' << std::endl << " " << i << ":" << std::endl; // print group
+
+	auto print = [](const Item* item) { std::cout << "  - " << item->ToString() << std::endl; };
+	std::for_each(subgroup->cbegin(), subgroup->cend(), print);
 }
 
 int Data::CountSubgroupItems(char c, int i) {
-	return 0;
+	auto subgroup = GetSubgroup(c, i);
+	if (!subgroup) {
+		throw std::invalid_argument("Group not found!");
+	}
+
+	return subgroup->size();
 }

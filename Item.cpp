@@ -46,3 +46,13 @@ int Item::getSubgroup() const
 {
 	return Subgroup;
 }
+
+std::string Item::getName() const
+{
+	return Name;
+}
+
+Date Item::getTimestamp() const
+{
+	return Timestamp;
+}

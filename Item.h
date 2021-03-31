@@ -18,6 +18,8 @@ public:
 	~Item();
 	std::string ToString() const;
 	int getSubgroup() const;
+	std::string getName() const;
+	Date getTimestamp() const;
 	// TODO move constructor
 	// TODO assignment op
 	// TODO move assignment op
