@@ -15,7 +15,7 @@ Data::Data(int n)
 	std::default_random_engine generator;
 	RandomUtils random(generator);
 
-	for (int i = 0; i < n; i++) { 
+	for (int i = 0; i < n; i++) {
 		char group = random.getRandomGroup();
 		int subgroup = random.getRandomSubgroup();
 		std::string name = random.getRandomName();
@@ -27,7 +27,7 @@ Data::Data(int n)
 
 Data::~Data()
 {
-	
+
 	for (auto& outerMapIt : DataStructure) {
 
 		for (auto& innerMapIt : *outerMapIt.second) {
@@ -43,45 +43,56 @@ Data::~Data()
 		std::cout << "destroying Group \"" << outerMapIt.first << '\"' << std::endl;
 		delete outerMapIt.second;
 	}
-	
+
 	// TODO map itself is in stack, is this necessary?  
 	DataStructure.clear();
 }
 
-Item* Data::InsertItem(char c, int i, std::string s, Date d) 
+Item* Data::InsertItem(char c, int i, std::string s, Date d)
 {
-	auto it = DataStructure.find(c);
+	try	{
+		auto it = DataStructure.find(c);
 
-	Item* newItem = new Item(c, i, s, d);
+		Item* newItem = new Item(c, i, s, d);
 
-	if (it != DataStructure.end()) { // group exists
-		auto group = it->second;
-		auto subgroupIt = group->find(i);
-
-		if (subgroupIt != group->end()) { // subgroup exists
-			subgroupIt->second->push_back(newItem); 
+		Item* existing = GetItem(c, i, s);
+		if (existing) { // item already exists
+			return nullptr;
 		}
-		else
-		{
-			InsertSubgroup(c, i, { newItem });
-		}
-	}
-	else {
-		InsertGroup(c, { i }, { { newItem } });
-	}
 
-	return newItem;
+		if (it != DataStructure.end()) { // group exists
+			auto group = it->second;
+			auto subgroupIt = group->find(i);
+
+			if (subgroupIt != group->end()) { // subgroup exists
+				subgroupIt->second->push_back(newItem);
+			}
+			else
+			{
+				InsertSubgroup(c, i, { newItem });
+			}
+		}
+		else {
+			InsertGroup(c, { i }, { { newItem } });
+		}
+
+		return newItem;
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what();
+		return nullptr;
+	}
 }
 
-std::list<Item*>* Data::InsertSubgroup(char s, int i, std::initializer_list<Item*> items) 
+std::list<Item*>* Data::InsertSubgroup(char s, int i, std::initializer_list<Item*> items)
 {
 	auto groupIt = DataStructure.find(s);
-	groupIt->second->emplace(i, new std::list<Item*>(items) );
+	groupIt->second->emplace(i, new std::list<Item*>(items));
 
 	return groupIt->second->find(i)->second;
 }
 
-std::map<int, std::list<Item*>*>* Data::InsertGroup(char c, std::initializer_list<int> subgroupKeys, std::initializer_list<std::initializer_list<Item*>> items) 
+std::map<int, std::list<Item*>*>* Data::InsertGroup(char c, std::initializer_list<int> subgroupKeys, std::initializer_list<std::initializer_list<Item*>> items)
 {
 	std::map<int, std::list<Item*>*>* group = new std::map<int, std::list<Item*>*>();
 
@@ -100,7 +111,7 @@ std::map<int, std::list<Item*>*>* Data::InsertGroup(char c, std::initializer_lis
 	return group;
 }
 
-void Data::PrintAll() 
+void Data::PrintAll()
 {
 	auto print = [](const Item* item) { std::cout << "  - " << item->ToString() << std::endl; };
 
@@ -119,7 +130,7 @@ void Data::PrintAll()
 	}
 }
 
-int Data::CountItems() 
+int Data::CountItems()
 {
 	int totalSize = 0;
 	for (auto it = DataStructure.cbegin(); it != DataStructure.cend(); ++it) {
@@ -170,10 +181,10 @@ int Data::CountGroupItems(char c)
 		return 0;
 	}
 
-	int totalSize = 0; 
+	int totalSize = 0;
 	for (auto inner_it = group->cbegin(); inner_it != group->cend(); ++inner_it) {
 		totalSize += inner_it->second->size();
-	} 
+	}
 
 	return totalSize;
 }
@@ -183,7 +194,7 @@ std::list<Item*>* Data::GetSubgroup(char c, int i) {
 
 	auto group = GetGroup(c);
 	if (!group) {
-		throw std::invalid_argument("Group not found!\n");
+		return nullptr;
 	}
 
 	auto subgroupIt = group->find(i);
@@ -201,8 +212,8 @@ void Data::PrintSubgroupByNames(char c, int i) {
 	}
 
 	subgroup->sort([](Item* lhs, Item* rhs) {return lhs->getName() < rhs->getName(); });
-	
-	std::cout << std::endl <<"** Subgroup sorted by names **" << std::endl << c << ':' << std::endl << " " << i << ":"<< std::endl; // print group
+
+	std::cout << std::endl << "** Subgroup sorted by names **" << std::endl << c << ':' << std::endl << " " << i << ":" << std::endl; // print group
 
 	auto print = [](const Item* item) { std::cout << "  - " << item->ToString() << std::endl; };
 	std::for_each(subgroup->cbegin(), subgroup->cend(), print);
@@ -216,7 +227,7 @@ void Data::PrintSubgroupByDates(char c, int i) {
 
 	subgroup->sort([](Item* lhs, Item* rhs) {return lhs->getTimestamp() < rhs->getTimestamp(); });
 
-	std::cout << std::endl  << "** Subgroup sorted by dates **" << std::endl << c << ':' << std::endl << " " << i << ":" << std::endl; // print group
+	std::cout << std::endl << "** Subgroup sorted by dates **" << std::endl << c << ':' << std::endl << " " << i << ":" << std::endl; // print group
 
 	auto print = [](const Item* item) { std::cout << "  - " << item->ToString() << std::endl; };
 	std::for_each(subgroup->cbegin(), subgroup->cend(), print);
@@ -234,11 +245,11 @@ int Data::CountSubgroupItems(char c, int i) {
 Item* Data::GetItem(char c, int i, std::string s) {
 	auto subgroup = GetSubgroup(c, i);
 	if (!subgroup) {
-		throw std::invalid_argument("Subgroup not found!\n");
-	} 
+		return nullptr;
+	}
 
 	Item testItem = Item(c, i, s, Date());
-	auto itemIter = std::find_if(subgroup->begin(), subgroup->end(), 
+	auto itemIter = std::find_if(subgroup->begin(), subgroup->end(),
 		[&testItem](const Item* x) { return x->getName() == testItem.getName(); });
 
 	if (itemIter != subgroup->end()) { // item exists

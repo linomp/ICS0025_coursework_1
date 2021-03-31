@@ -165,25 +165,50 @@ void testCase8() {
 }
 
 /*
-*/
+* Apply method InsertItem() if:
+*/ 
 void testCase9() {
-	//Data data = Data(30);
-	//data.PrintAll();
+	Data data = Data();
+	data.PrintAll();
+
+	// a.The new item will be a member of an existing group and an existing subgroup.
+	data.InsertItem('B', 0, "b0", Date(1, 1, 2021));
+	data.InsertItem('B', 0, "b1", Date(1, 3, 2021));
+	assert(data.CountGroupItems('B') == 2);
+
+	// b.The new item will be a member of an existing group but the subgroup does not exist.
+	data.InsertItem('B', 5, "b1", Date(1, 3, 2021));
+	
+	assert(data.CountGroupItems('B') == 3);
+	assert(data.CountSubgroupItems('B', 5) == 1);
+
+    // c.The new item will be a member of a non - existing group.
+	data.InsertItem('C', 0, "c0", Date(1, 3, 2021));
+	assert(data.CountItems() == 4);
+
+	// d.This item already exists.
+	Item* newItem = data.InsertItem('C', 0, "c0", Date(1, 3, 2021));
+	assert(data.CountItems() == 4); // count should remain the same
+	assert(!newItem); // should be nullptr
+
+	// e.Apply method PrintAll() to check the results.
+	data.PrintAll();
 }
 
 int main()
 {
-	//testEmpty();
-	//testCase1();
-	//testCase2();
-	//testCase3();
-	//testCase4();
-	//testCase5();
-	//testCase6();
-	//testCase7(); // create 30?
-	//testCase8();
-		
-		testCase9();
+	/*testEmpty();
+	testCase1();
+	testCase2();
+	testCase3();
+	testCase4();
+	testCase5();
+	testCase6();
+	testCase7();
+	testCase8();
+	testCase9();
+	*/
+
 		//testCase10();
 		//testCase11();
 	

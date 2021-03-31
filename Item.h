@@ -20,10 +20,5 @@ public:
 	int getSubgroup() const;
 	std::string getName() const;
 	Date getTimestamp() const;
-	// TODO operator< 
-
-	// TODO move constructor
-	// TODO assignment op
-	// TODO move assignment op
 };
 

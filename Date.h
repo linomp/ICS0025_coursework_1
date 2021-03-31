@@ -31,7 +31,6 @@ public:
 	bool operator<(const Date&) const;
 	Date& operator=(const Date&);
 	static Date CreateRandomDate(Date, Date);
-
 };
 
 
